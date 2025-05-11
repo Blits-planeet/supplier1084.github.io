@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Thank You for Your Purchase - DonateEase{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <section class="thank-you-container">
+        <div class="card">
+            <div class="thank-you-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1>Thank You for Your Purchase!</h1>
+            <p>Your payment of <strong>${{ donation.amount }}</strong> has been received.</p>
+            <p>We've sent a confirmation email to <strong>{{ donation.email }}</strong>.</p>
+            
+            <div class="donation-details">
+                <h2>Purchase Details</h2>
+                <div class="donation-summary">
+                    <div class="summary-item">
+                        <span>Amount:</span>
+                        <span>${{ donation.amount }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Name:</span>
+                        <span>{{ donation.fullName }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Email:</span>
+                        <span>{{ donation.email }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Payment Method:</span>
+                        <span>{{ donation.paymentMethod|capitalize }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Date:</span>
+                        <span>{{ donation.createdAt.split('T')[0] }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <a href="/" class="btn btn-primary">Make Another Purchase</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

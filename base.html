@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>{% block title %}Supplier 1084{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block additional_head %}{% endblock %}
+</head>
+<body class="light-mode">
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="/">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Supplier 1084</span>
+                    </a>
+                </div>
+                <div class="nav-links">
+                    <a href="/purchase-history" class="nav-link">
+                        <i class="fa-solid fa-receipt"></i> Purchase History
+                    </a>
+                    <div class="theme-toggle">
+                        <button id="theme-toggle-btn" aria-label="Toggle dark mode">
+                            <i class="fa-solid fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Supplier 1084. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="toast-container"></div>
+
+    <!-- Common scripts -->
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/toast.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

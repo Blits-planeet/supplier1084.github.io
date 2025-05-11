@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Complete Your Payment - DonateEase{% endblock %}
+
+{% block additional_head %}
+{% if payment_method == 'paypal' %}
+<script src="https://www.paypal.com/sdk/js?client-id=test"></script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <section class="payment-header">
+        <h1>Complete Your Donation</h1>
+        <p>Please complete your payment to finalize your donation.</p>
+    </section>
+
+    <section class="payment-details">
+        <div class="card">
+            <h2>Donation Summary</h2>
+            <div class="donation-summary">
+                <div class="summary-item">
+                    <span>Amount:</span>
+                    <span>${{ donation.amount }}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Name:</span>
+                    <span>{{ donation.fullName }}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Email:</span>
+                    <span>{{ donation.email }}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Payment Method:</span>
+                    <span>{{ donation.paymentMethod|capitalize }}</span>
+                </div>
+            </div>
+        </div>
+
+        {% if payment_method == 'paypal' %}
+        <div class="card">
+            <h2>PayPal (Friends & Family)</h2>
+            <p>Click the PayPal button below to complete your payment using Friends & Family option. Your email is required to process the payment.</p>
+            <div class="payment-summary">
+                <p><strong>Notes:</strong> {{ donation.purchaseInfo }}</p>
+            </div>
+            <div id="paypal-button-container"></div>
+        {% elif payment_method == 'card' %}
+        <div class="card">
+            <h2>Credit/Debit Card (Business)</h2>
+            <p>Click the button below to complete your payment using a credit or debit card for business transactions. Your email is required to process the payment.</p>
+            <div class="payment-summary">
+                <p><strong>Notes:</strong> {{ donation.purchaseInfo }}</p>
+            </div>
+            <div id="paypal-button-container"></div>
+        </div>
+        {% elif payment_method == 'crypto' %}
+        <div class="card" id="crypto-payment">
+            <h2>Cryptocurrency Payment</h2>
+            <p>Please send your donation to one of the following wallet addresses:</p>
+            <div class="wallet-list">
+                <div class="wallet-container">
+                    <h3><i class="fab fa-bitcoin"></i> Bitcoin (BTC)</h3>
+                    <div class="wallet-address" id="btc-wallet"></div>
+                    <button class="btn btn-secondary copy-btn" data-wallet="BTC">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                
+                <div class="wallet-container">
+                    <h3><i class="fab fa-ethereum"></i> Ethereum (ETH)</h3>
+                    <div class="wallet-address" id="eth-wallet"></div>
+                    <button class="btn btn-secondary copy-btn" data-wallet="ETH">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                
+                <div class="wallet-container">
+                    <h3><i class="fab fa-litecoin"></i> Litecoin (LTC)</h3>
+                    <div class="wallet-address" id="ltc-wallet"></div>
+                    <button class="btn btn-secondary copy-btn" data-wallet="LTC">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+            <div class="confirm-payment">
+                <button id="confirm-crypto-payment" class="btn btn-primary">
+                    I've Sent the Payment
+                </button>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if payment_method == 'paypal' or payment_method == 'card' %}
+<script src="https://www.paypal.com/sdk/js?client-id={{ client_id }}&currency=USD"></script>
+<script src="{{ url_for('static', filename='js/paypal.js') }}"></script>
+{% elif payment_method == 'crypto' %}
+<script src="{{ url_for('static', filename='js/crypto.js') }}"></script>
+{% endif %}
+{% endblock %}

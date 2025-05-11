@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Purchase History - Supplier 1084{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <section class="history-header">
+        <h1>Purchase History</h1>
+        <p>Enter your email address to view your purchase history.</p>
+    </section>
+
+    <section class="history-search">
+        <div class="card">
+            <form id="search-history-form">
+                <div class="form-group">
+                    <label for="history-email">Email Address</label>
+                    <input type="email" id="history-email" name="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="purchase-history">
+        <div id="purchase-history-container" class="card">
+            <!-- Purchase history will be displayed here -->
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/purchase-history.js') }}"></script>
+{% endblock %}
